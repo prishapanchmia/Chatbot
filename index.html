@@ -1,33 +1,386 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
     <title>Knowledge Chatbot</title>
-</head>
 
-<body>
-    <h1> Chatbot Web App</h1>
     <link rel="stylesheet"
-        href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+        href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css" />
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <df-messenger project-id="iconic-range-474621-r5" agent-id="2c504cfd-1260-4241-a941-9a3c0d35e6ad" language-code="en"
-        max-query-length="-1" allow-speech="all">
-        <df-messenger-chat-bubble chat-title="Knowledge Assistant">
-        </df-messenger-chat-bubble>
-    </df-messenger>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 48px 390px 60px 48px;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .hero {
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h2 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding-right: 32px;
+                padding-left: 24px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            df-messenger {
+                width: 100% !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                top: auto !important;
+            }
+        }
+
+        .card {
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .list {
+            padding-left: 20px;
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .list li {
+            margin-bottom: 8px;
+        }
+
+        .list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .samples {
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .samples h2 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .samples>p {
+            color: #cbd5e1;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .sample {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            gap: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .sample:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .sample span {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+
+        .sample button {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .sample button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .sample button:active {
+            transform: translateY(0);
+        }
+
+        .note {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #fbbf24;
+            line-height: 1.6;
+        }
+
+        .note em {
+            color: #fcd34d;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .toast {
+            position: fixed;
+            left: 32px;
+            bottom: 32px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            color: #ffffff;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         df-messenger {
             z-index: 999;
             position: fixed;
             --df-messenger-font-color: #000;
             --df-messenger-font-family: Google Sans;
             --df-messenger-chat-background: #f3f6fc;
-            --df-messenger-message-user-background: #d3e3fd;
-            --df-messenger-message-bot-background: #fff;
-            bottom: 16px;
-            right: 16px;
+            --df-messenger-message-user-background: #C6DAFC;
+            --df-messenger-message-bot-background: #60a5fa;
+            bottom: 20px;
+            right: 20px;
+            top: 150px;
+            width: 350px;
         }
     </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Knowledge Chatbot</h1>
+
+        <div class="stack">
+            <div class="hero">
+                <h2>Ask questions. Get answers grounded in the uploaded documents.</h2>
+                <p>
+                    This assistant retrieves answers only from the document set configured in the agent.
+                    If something isn't covered in the documents, it will respond that it can only answer
+                    questions related to the uploaded documents.
+                </p>
+
+                <div class="grid">
+                    <div class="card">
+                        <h3>What's in the document set</h3>
+                        <ul class="list">
+                            <li>Residential permit guidance (e.g., decks, basement development)</li>
+                            <li>Permit fee schedules</li>
+                            <li>Inspection checklists (e.g., framing)</li>
+                            <li>Service standards / turnaround times</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>How to use the bot</h3>
+                        <ul class="list">
+                            <li>Ask questions from the chatbot on the right</li>
+                            <li>Ask specific, document-related questions</li>
+                            <li>Check citations/source links for grounding</li>
+                            <li>Out-of-scope questions are politely declined</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Grounding checks</h3>
+                        <ul class="list">
+                            <li>Ask an in-scope question → should return a doc-based answer</li>
+                            <li>Ask "What's the weather?" → should respond "document-only"</li>
+                            <li>Ask for a specific number → should only answer if it's in the docs</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>What this assistant can & cannot do</h3>
+                        <ul class="list">
+                            <li>Answers questions using only the documents provided by your organization</li>
+                            <li>Does not use internet search or external knowledge sources</li>
+                            <li>Will clearly state when information is not available in the documents</li>
+                            <li>Designed to reduce misinformation and prevent hallucinated responses</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="samples">
+                <h2>Sample questions</h2>
+                <p>Click <strong>Ask</strong> and paste the question into the chatbot.</p>
+
+                <div class="sample">
+                    <span>Do I need a permit for a deck attached to my house?</span>
+                    <button data-q="Do I need a permit for a deck attached to my house?">Ask</button>
+                </div>
+
+                <div class="sample">
+                    <span>What are the key requirements for basement development permits?</span>
+                    <button data-q="What are the key requirements for basement development permits?">Ask</button>
+                </div>
+
+                <div class="sample">
+                    <span>How long does a permit review typically take?</span>
+                    <button data-q="How long does a permit review typically take?">Ask</button>
+                </div>
+
+                <div class="sample">
+                    <span>What does a framing inspection include?</span>
+                    <button data-q="What does a framing inspection include?">Ask</button>
+                </div>
+
+                <div class="note">
+                    Out-of-scope example: <em>"What's the weather today?"</em><br />
+                    The chatbot should respond that it can only answer based on uploaded documents.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Copied! Paste into the chat →</div>
+
+    <df-messenger project-id="iconic-range-474621-r5" agent-id="2c504cfd-1260-4241-a941-9a3c0d35e6ad" language-code="en"
+        max-query-length="-1" allow-speech="all" intent="WELCOME">
+        <df-messenger-chat chat-title="Knowledge Assistant"></df-messenger-chat>
+    </df-messenger>
+
+    <script>
+        const toast = document.getElementById("toast");
+        let toastTimeout;
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1600);
+        }
+
+        document.querySelectorAll("button[data-q]").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+                const q = btn.getAttribute("data-q") || "";
+                try {
+                    await navigator.clipboard.writeText(q);
+                    showToast("Copied! Paste into the chat →");
+                } catch {
+                    showToast("Copy failed. Please copy manually.");
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
