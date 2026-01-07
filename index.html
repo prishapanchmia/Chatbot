@@ -157,6 +157,31 @@
             font-size: 15px;
         }
 
+        .samples-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+            margin-bottom: 20px;
+        }
+
+        .samples-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .samples-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .samples-scroll::-webkit-scrollbar-thumb {
+            background: rgba(96, 165, 250, 0.4);
+            border-radius: 4px;
+        }
+
+        .samples-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.6);
+        }
+
         .sample {
             display: flex;
             justify-content: space-between;
@@ -321,24 +346,54 @@
                 <h2>Sample questions</h2>
                 <p>Click <strong>Ask</strong> and paste the question into the chatbot.</p>
 
-                <div class="sample">
-                    <span>Do I need a permit for a deck attached to my house?</span>
-                    <button data-q="Do I need a permit for a deck attached to my house?">Ask</button>
-                </div>
+                <div class="samples-scroll">
+                    <div class="sample">
+                        <span>Do I need a permit for a deck attached to my house?</span>
+                        <button data-q="Do I need a permit for a deck attached to my house?">Ask</button>
+                    </div>
 
-                <div class="sample">
-                    <span>What are the key requirements for basement development permits?</span>
-                    <button data-q="What are the key requirements for basement development permits?">Ask</button>
-                </div>
+                    <div class="sample">
+                        <span>What are the key requirements for basement development permits?</span>
+                        <button data-q="What are the key requirements for basement development permits?">Ask</button>
+                    </div>
 
-                <div class="sample">
-                    <span>How long does a permit review typically take?</span>
-                    <button data-q="How long does a permit review typically take?">Ask</button>
-                </div>
+                    <div class="sample">
+                        <span>How long does a permit review typically take?</span>
+                        <button data-q="How long does a permit review typically take?">Ask</button>
+                    </div>
 
-                <div class="sample">
-                    <span>What does a framing inspection include?</span>
-                    <button data-q="What does a framing inspection include?">Ask</button>
+                    <div class="sample">
+                        <span>What does a framing inspection include?</span>
+                        <button data-q="What does a framing inspection include?">Ask</button>
+                    </div>
+                    <div class="sample">
+                        <span>What happens if an inspection fails?</span>
+                        <button data-q="What happens if an inspection fails?">Ask</button>
+                    </div>
+
+                    <div class="sample">
+                        <span>Is a home occupation allowed in residential areas?</span>
+                        <button data-q="Is a home occupation allowed in residential areas?">Ask</button>
+                    </div>
+
+                    <div class="sample">
+                        <span>What are typical restrictions for a home-based business?</span>
+                        <button data-q="What are typical restrictions for a home-based business?">Ask</button>
+                    </div>
+
+                    <div class="sample">
+                        <span>What work must be completed before requesting a framing inspection?</span>
+                        <button data-q="What work must be completed before requesting a framing inspection?">Ask</button>
+                    </div>
+                    <div class="sample">
+                        <span>Where can I find information about permit fees?</span>
+                        <button data-q="Where can I find information about permit fees?">Ask</button>
+                    </div>
+
+                    <div class="sample">
+                        <span>I am opening a restaurant—what licenses and inspections do I need?</span>
+                        <button data-q="I am opening a restaurant—what licenses and inspections do I need?">Ask</button>
+                    </div>
                 </div>
 
                 <div class="note">
@@ -352,7 +407,7 @@
     <div id="toast" class="toast">Copied! Paste into the chat →</div>
 
     <df-messenger project-id="iconic-range-474621-r5" agent-id="2c504cfd-1260-4241-a941-9a3c0d35e6ad" language-code="en"
-        max-query-length="-1" allow-speech="all" intent="WELCOME">
+        max-query-length="-1" allow-speech="all">
         <df-messenger-chat chat-title="Knowledge Assistant"></df-messenger-chat>
     </df-messenger>
 
